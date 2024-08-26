@@ -1,0 +1,52 @@
+﻿@using Gymlog.Core.Models.CardViews
+@model EditCard
+@{
+    ViewData["Title"] = "Edit Card";
+}
+
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Кредитна Карта</title>
+    <link rel="stylesheet" href="/css/card/editCard.css">
+</head>
+<body>
+    <form asp-action="EditCard" method="post" id="editCardForm">
+        <div class="conteiner">
+            <div class="credit-card">
+                <input type="hidden" name="Id" value="@Model.Id" />
+                <div class="card-logo">
+                    <img src="https://biosportgym.com/wp-content/uploads/2023/05/cropped-cropped-cropped-whitelogo-2-2048x488.png" alt="Card Logo">
+                    <button type="submit" id="saveButton">Запази</button>
+                </div>
+                <div class="card-number">
+                    Номер на карта: @Model.Id
+                </div>
+                <div class="card-holder">
+                    <label for="FullName">Картодържател:</label>
+                    <input type="text" id="FullName" name="FullName" value="@Model.FirstName @Model.LastName" />
+                </div>
+                <div class="card-expiry">
+                    <label for="End">Валидна до:</label>
+                    <input type="date" id="End" name="End" value="@Model.End.ToString("yyyy-MM-dd")" />
+                </div>
+                <div class="card-Id">
+                    <label for="CardId">Id:</label>
+                    <input type="text" id="CardId" name="CardId" value="@Model.CardId"  />
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <script>
+        document.addEventListener('keydown', function (event) {
+            if (event.key === 'Enter') {
+                event.preventDefault(); // Предотвратява стандартното поведение на Enter
+                document.getElementById('saveButton').click(); // Кликва бутона за запазване
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,50 @@
+﻿@{
+    ViewData["Title"] = "Create Page";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="/css/card/cardCreate.css">
+</head>
+<body>
+
+    <div class="card-body">
+        <form asp-controller="Card" asp-action="Create" method="post" class="create">
+            <header>
+                <h1>Добави карта</h1>
+            </header>
+
+            <div class="field">
+                <input type="text" name="firtsName" id="firtsName" placeholder="Име" required>
+                <label for="firtsName">Име</label>
+            </div>
+            <div class="field">
+                <input type="text" name="lastName" id="lastName" placeholder="Фамилия" required>
+                <label for="lastName">Фамилия</label>
+            </div>
+
+            <div class="field">
+                <input type="date" id="startData" name="startData" required>
+                <label for="startData">От дата:</label>
+            </div>
+            <div class="field">
+                <input type="date" id="endData" name="endData" required>
+                <label for="endData">До дата:</label>
+            </div>
+            <div class="field">
+                <input type="text" id="cardId" name="cardId" required>
+                <label for="cardId">Card-Id</label>
+            </div>
+
+            <input class="button" type="submit" value="Добави">
+        </form>
+    </div>
+
+</body>
+</html>
+
+

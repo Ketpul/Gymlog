@@ -1,0 +1,34 @@
+﻿@{
+    ViewData["Title"] = "View Page";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="/css/card/view.css">
+</head>
+<body>
+    <div class="conteiner">
+        <form asp-action="CheckCard" method="post" class="create">
+            <header>
+                <h1>Търсене на карта</h1>
+            </header>
+
+            <div class="field">
+                <input type="text" name="cardNumber" id="card-number" placeholder="Номер на карта">
+                <label for="card-number">Номер на карта</label>
+            </div>
+            <div class="field">
+                <input type="text" name="cardId" id="cardId" placeholder="Card Id">
+                <label for="cardId">Card Id</label>
+            </div>
+            <input class="button" type="submit" value="Търси">
+        </form>
+    </div>
+</body>
+</html>
+
+

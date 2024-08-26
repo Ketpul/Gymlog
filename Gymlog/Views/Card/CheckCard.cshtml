@@ -1,0 +1,53 @@
+﻿@using Gymlog.Core.Models.CardViews
+@model MyCardView
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Кредитна Карта</title>
+    <link rel="stylesheet" href="/css/card/myCards.css">
+</head>
+<body>
+    <div class="container">
+        <div class="credit-card">
+
+            <div class="card-logo">
+                <img src="https://biosportgym.com/wp-content/uploads/2023/05/cropped-cropped-cropped-whitelogo-2-2048x488.png" alt="Card Logo">
+                <form asp-action="EditCard" method="get" >
+                    <input type="hidden" name="cardId" value="@Model.Id" />
+                    <button type="submit">Редактирай</button>
+                </form>
+            </div>
+
+            <div class="card-number">
+                Номер на карта: @Model.Id
+            </div>
+            <div class="card-holder">
+                <label>Картодържател:</label>
+                <div>@Model.FirstName @Model.LastName</div>
+            </div>
+            <div class="card-expiry">
+                <label>Валидна до:</label>
+                <div>@Model.End.ToString("MMMM dd, yyyy")</div>
+            </div>
+            <div class="cardId">
+                <label>id:</label>
+                <div>@Model.CardId</div>
+            </div>
+        </div>
+
+        <!-- New fields for Monthly and Daily Visits -->
+        <div class="visit-info">
+            <div class="visit-field">
+                <label>Месечни посещения:</label>
+                <div>@Model.Мonth</div>
+            </div>
+            <div class="visit-field">
+                <label>Дневни посещения:</label>
+                <div>@Model.Daily</div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

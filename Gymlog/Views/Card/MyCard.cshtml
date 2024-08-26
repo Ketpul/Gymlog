@@ -1,0 +1,46 @@
+﻿@using Gymlog.Core.Models.CardViews
+@using static Gymlog.Constants.RoleConstants;
+@model MyCardView
+@{
+    ViewData["Title"] = "My Card";
+}
+
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Кредитна Карта</title>
+    <link rel="stylesheet" href="/css/card/myCards.css">
+</head>
+<body>
+    <div class="conteiner">
+        <div class="credit-card">
+            <div class="card-logo">
+                <img src="https://biosportgym.com/wp-content/uploads/2023/05/cropped-cropped-cropped-whitelogo-2-2048x488.png" alt="Card Logo">
+                @if (User.IsInRole(AdminRole))
+                {
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Card" asp-action="EditCard" asp-route-cardId="@Model.Id">Редактирай</a>
+                }
+            </div>
+            <div class="card-number">
+                Номер на карта: @Model.Id
+            </div>
+            <div class="card-holder">
+                <label>Картодържател</label>
+                <div>@Model.FirstName @Model.LastName</div>
+            </div>
+            <div class="card-expiry">
+                <label>Валидна до</label>
+                <div>@Model.End.ToString("MMMM dd, yyyy")</div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+
+
+
+
+          
