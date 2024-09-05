@@ -1,6 +1,4 @@
-﻿@using Gymlog.Core.Models.CardViews
-@model MyCardView
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="bg">
 <head>
     <meta charset="UTF-8">
@@ -11,12 +9,16 @@
 <body>
     <div class="container">
         <div class="credit-card">
-
             <div class="card-logo">
                 <img src="https://biosportgym.com/wp-content/uploads/2023/05/cropped-cropped-cropped-whitelogo-2-2048x488.png" alt="Card Logo">
-                <form asp-action="EditCard" method="get" >
+                <form asp-action="EditCard" method="get">
                     <input type="hidden" name="cardId" value="@Model.Id" />
                     <button type="submit">Редактирай</button>
+                </form>
+                <!-- Separate form for DeleteCard -->
+                <form asp-action="DeleteCard" method="post">
+                    <input type="hidden" name="cardId" value="@Model.Id" />
+                    <button type="submit" style="color: red">Изтрий</button>
                 </form>
             </div>
 

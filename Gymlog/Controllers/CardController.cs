@@ -35,6 +35,7 @@ namespace Gymlog.Controllers
             if (cardNumber.HasValue)
             {
                 return RedirectToAction("CheckCard", new { cardNumber = cardNumber.Value, cardId = cardId});
+
             }
 
             return View();
@@ -43,11 +44,11 @@ namespace Gymlog.Controllers
 
         [HttpPost]
         [HttpGet]
-        public async Task<IActionResult> CheckCard(int cardNumber, string? cardId)
+        public async Task<IActionResult> CheckCard(int cardNumber, string? cardId, bool check)
         {
             if (cardNumber != null && cardNumber != 0 || cardId != null)
             {
-                var model = await cardService.CheckCardAsync(cardNumber, cardId, GetUserId());
+                var model = await cardService.CheckCardAsync(cardNumber, cardId, GetUserId(), check);
                 if (model == null)
                 {
                     TempData["UserMessageError"] = "Няма карта с този номер";
@@ -137,7 +138,26 @@ namespace Gymlog.Controllers
             }
             await cardService.EditAsync(card);
 
-            return RedirectToAction("CheckCard", new { cardNumber = card.Id });
+            TempData[UserMessageSuccess] = "Картата е редактирана";
+
+            return RedirectToAction("CheckCard", new { cardNumber = card.Id, check = true });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteCard(int cardId)
+        {
+            await cardService.DeleteCardAsync(cardId);
+
+            TempData[UserMessageError] = "Картата е изтрита успешно!";
+
+            return RedirectToAction(nameof(ViewCard));
+        }
+
+        public async Task<IActionResult> ViewAllCards()
+        {
+            var cards = await cardService.ViewAllCardsAsync();
+
+            return View(cards);
         }
 
         private string GetUserId()

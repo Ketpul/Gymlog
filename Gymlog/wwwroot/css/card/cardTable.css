@@ -1,0 +1,59 @@
+﻿.container {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #333;
+}
+
+.cards-column {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.credit-card {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 100%;
+    box-sizing: border-box;
+    transition: transform 0.3s;
+}
+
+    .credit-card:hover {
+        transform: scale(1.05);
+    }
+
+.card-logo img {
+    max-width: 100px;
+    margin-bottom: 20px;
+}
+
+.card-number, .card-holder, .card-expiry {
+    margin: 10px 0;
+    font-size: 16px;
+    color: #555;
+}
+
+.card-holder {
+    font-weight: bold;
+}
+
+.card-link {
+    text-decoration: none;
+    color: inherit;
+}
+
+    .card-link:hover .credit-card {
+        transform: scale(1.05);
+        cursor: pointer;
+    }

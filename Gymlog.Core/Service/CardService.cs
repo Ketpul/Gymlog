@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Gymlog.Core.Models.CardViews;
 using System.Security.Claims;
-
+using Gymlog.Infrastructure.Data.SeedDb;
 
 namespace Gymlog.Core.Service
 {
@@ -22,7 +22,7 @@ namespace Gymlog.Core.Service
 
         }
 
-        public async Task<MyCardView> CheckCardAsync(int cardNumber, string cardId, string userId)
+        public async Task<MyCardView> CheckCardAsync(int cardNumber, string cardId, string userId, bool check)
         {
             var user = await userManager.FindByIdAsync(userId);
             bool isAdmin = await userManager.IsInRoleAsync(user, "Administrator");
@@ -36,7 +36,7 @@ namespace Gymlog.Core.Service
                 return null;
             }
 
-            if (card.DailyCounting.Date == DateTime.Today)
+            if (card.DailyCounting.Date == DateTime.Today && !check)
             {
                 card.Daily++;
             }
@@ -46,7 +46,7 @@ namespace Gymlog.Core.Service
                 card.DailyCounting = DateTime.Today;
             }
 
-            if (card.МonthCounting.Month == DateTime.Today.Month && card.МonthCounting.Year == DateTime.Today.Year)
+            if (card.МonthCounting.Month == DateTime.Today.Month && card.МonthCounting.Year == DateTime.Today.Year && !check)
             {
                 card.Мonth++;
             }
@@ -168,5 +168,37 @@ namespace Gymlog.Core.Service
                 await repository.SaveChangesAsync();
             }
         }
+
+        public async Task DeleteCardAsync(int cardId)
+        {
+            await repository.DeleteAsync<Card>(cardId);
+            await repository.SaveChangesAsync();
+        }
+
+        public async Task<List<MyCardView>> ViewAllCardsAsync()
+        {
+            var cardsModels = await repository.All<Card>().ToListAsync();
+            var cards = new List<MyCardView>();
+
+            foreach (var card in cardsModels) 
+            {
+                var model = new MyCardView
+                {
+                    Id = card.Id,
+                    FirstName = card.FirstName,
+                    LastName = card.LastName,
+                    End = card.End,
+                    Start = card.Start,
+                    CardId = card.CardId,
+                    Daily = card.Daily,
+                    Мonth = card.Мonth,
+                };
+
+                cards.Add(model); 
+            }
+
+            return cards; 
+        }
+
     }
 }
