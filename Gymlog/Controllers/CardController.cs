@@ -31,13 +31,19 @@ namespace Gymlog.Controllers
         [HttpGet]
         public IActionResult ViewCard(int? cardNumber, string? cardId)
         {
-            
-            if (cardNumber.HasValue)
+
+            if (cardId != null)
             {
-                return RedirectToAction("CheckCard", new { cardNumber = cardNumber.Value, cardId = cardId});
+                return RedirectToAction("CheckCard", new { cardId = cardId, check = true });
 
             }
+            else if(cardNumber.HasValue )
+            {
+                
+                return RedirectToAction("CheckCard", new { cardNumber = cardNumber.Value, cardId = cardId, check = true });
+            }
 
+            TempData["UserMessageError"] = "Трябва едно от двете полета да е попълнено!";
             return View();
         }
 
@@ -140,7 +146,7 @@ namespace Gymlog.Controllers
 
             TempData[UserMessageSuccess] = "Картата е редактирана";
 
-            return RedirectToAction("CheckCard", new { cardNumber = card.Id, check = true });
+            return RedirectToAction("CheckCard", new { cardNumber = card.Id, check = false });
         }
 
         [HttpPost]

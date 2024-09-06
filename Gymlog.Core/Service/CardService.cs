@@ -36,21 +36,21 @@ namespace Gymlog.Core.Service
                 return null;
             }
 
-            if (card.DailyCounting.Date == DateTime.Today && !check)
+            if (card.DailyCounting.Date == DateTime.Today && check)
             {
                 card.Daily++;
             }
-            else
+            else if(card.DailyCounting.Date != DateTime.Today)
             {
                 card.Daily = 1;
                 card.DailyCounting = DateTime.Today;
             }
 
-            if (card.МonthCounting.Month == DateTime.Today.Month && card.МonthCounting.Year == DateTime.Today.Year && !check)
+            if (card.МonthCounting.Month == DateTime.Today.Month && card.МonthCounting.Year == DateTime.Today.Year && check)
             {
                 card.Мonth++;
             }
-            else
+            else if(card.МonthCounting.Month != DateTime.Today.Month)
             {
                 card.Мonth = 1;
                 card.МonthCounting = DateTime.Today;
