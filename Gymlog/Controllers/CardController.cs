@@ -159,12 +159,17 @@ namespace Gymlog.Controllers
             return RedirectToAction(nameof(ViewCard));
         }
 
-        public async Task<IActionResult> ViewAllCards()
+        public async Task<IActionResult> ViewAllCards(string? searchQuery, string cardStatus = "all")
         {
-            var cards = await cardService.ViewAllCardsAsync();
+            // Запазване на търсената стойност и статус на картите във ViewData
+            ViewData["SearchQuery"] = searchQuery;
+            ViewData["CardStatus"] = cardStatus;
 
+            var cards = await cardService.ViewAllCardsAsync(searchQuery, cardStatus);
             return View(cards);
         }
+
+
 
         private string GetUserId()
         {

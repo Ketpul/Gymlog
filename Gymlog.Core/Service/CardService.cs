@@ -24,6 +24,7 @@ namespace Gymlog.Core.Service
 
         public async Task<MyCardView> CheckCardAsync(int cardNumber, string cardId, string userId, bool check)
         {
+            string valid = string.Empty;
             var user = await userManager.FindByIdAsync(userId);
             bool isAdmin = await userManager.IsInRoleAsync(user, "Administrator");
 
@@ -56,19 +57,32 @@ namespace Gymlog.Core.Service
                 card.МonthCounting = DateTime.Today;
             }
 
-            // Save the changes to the card
+            var currentDate = DateTime.Now;
+            
+
+            if (card.Start <= currentDate && card.End >= currentDate)
+            {
+                valid = "Да";
+            }
+            else
+            {
+                valid = "Не";
+            }
+
+
             await repository.SaveChangesAsync();
 
-            // Create and populate the view model
             var model = new MyCardView
             {
                 Id = card.Id,
                 FirstName = card.FirstName,
                 LastName = card.LastName,
+                Start = card.Start,
                 End = card.End,
                 CardId = card.CardId,
                 Daily = card.Daily,
                 Мonth = card.Мonth,
+                Valid = valid,
             };
 
             // Return the model if user is admin or matches the card details
@@ -175,12 +189,34 @@ namespace Gymlog.Core.Service
             await repository.SaveChangesAsync();
         }
 
-        public async Task<List<MyCardView>> ViewAllCardsAsync()
+        public async Task<List<MyCardView>> ViewAllCardsAsync(string? searchQuery, string cardStatus)
         {
-            var cardsModels = await repository.All<Card>().ToListAsync();
+            var cardsQuery = repository.All<Card>().AsQueryable();
+
+            if (!string.IsNullOrEmpty(searchQuery))
+            {
+                cardsQuery = cardsQuery.Where(card => (card.FirstName + " " + card.LastName)
+                                                      .Contains(searchQuery));
+            }
+
+            var currentDate = DateTime.Now;
+            switch (cardStatus)
+            {
+                case "valid":
+                    cardsQuery = cardsQuery.Where(card => card.Start <= currentDate && card.End >= currentDate); 
+                    break;
+                case "invalid":
+                    cardsQuery = cardsQuery.Where(card => card.Start > currentDate || card.End < currentDate); 
+                    break;
+                case "all":
+                default:
+                    break;
+            }
+
+            var cardsModels = await cardsQuery.ToListAsync();
             var cards = new List<MyCardView>();
 
-            foreach (var card in cardsModels) 
+            foreach (var card in cardsModels)
             {
                 var model = new MyCardView
                 {
@@ -194,10 +230,10 @@ namespace Gymlog.Core.Service
                     Мonth = card.Мonth,
                 };
 
-                cards.Add(model); 
+                cards.Add(model);
             }
 
-            return cards; 
+            return cards;
         }
 
     }

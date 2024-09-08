@@ -15,7 +15,6 @@
                     <input type="hidden" name="cardId" value="@Model.Id" />
                     <button type="submit">Редактирай</button>
                 </form>
-                <!-- Separate form for DeleteCard -->
                 <form asp-action="DeleteCard" method="post">
                     <input type="hidden" name="cardId" value="@Model.Id" />
                     <button type="submit" style="color: red">Изтрий</button>
@@ -30,16 +29,26 @@
                 <div>@Model.FirstName @Model.LastName</div>
             </div>
             <div class="card-expiry">
+                <label>Валидна от:</label>
+                <div>@Model.Start.ToString("MMMM dd, yyyy")</div>
+            </div>
+            <div class="card-expiry">
                 <label>Валидна до:</label>
                 <div>@Model.End.ToString("MMMM dd, yyyy")</div>
             </div>
-            <div class="cardId">
-                <label>id:</label>
-                <div>@Model.CardId</div>
+            <div class="in">
+
+                <div class="cardId">
+                    <label>id:</label>
+                    <div>@Model.CardId</div>
+                </div>
+                <div class="cardV">
+                    <label>Валидност:</label>
+                    <div>@Model.Valid</div>
+                </div>
             </div>
         </div>
 
-        <!-- New fields for Monthly and Daily Visits -->
         <div class="visit-info">
             <div class="visit-field">
                 <label>Месечни посещения:</label>

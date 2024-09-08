@@ -1,16 +1,30 @@
-﻿@using Gymlog.Core.Models.CardViews
-@model List<MyCardView>
-
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="bg">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Кредитни Карти</title>
-    <link rel="stylesheet" href="/css/card/cardTable.css">
+    <link rel="stylesheet" href="~/css/card/cardTable.css">
 </head>
 <body>
     <div class="container">
+        <form method="get" action="@Url.Action("ViewAllCards", "Card")">
+            <input type="text" name="searchQuery" placeholder="Търси по име..." value="@ViewData["SearchQuery"]" />
+
+            <button type="submit">Търси</button>
+            <div>
+                <input type="radio" id="all" name="cardStatus" value="all" @(ViewData["CardStatus"] as string == "all" ? "checked" : "")>
+                <label for="all">Всички</label>
+
+                <input type="radio" id="valid" name="cardStatus" value="valid" @(ViewData["CardStatus"] as string == "valid" ? "checked" : "")>
+                <label for="valid">Валидни</label>
+
+                <input type="radio" id="invalid" name="cardStatus" value="invalid" @(ViewData["CardStatus"] as string == "invalid" ? "checked" : "")>
+                <label for="invalid">Невалидни</label>
+            </div>
+
+        </form>
+
         <div class="cards-column">
             @foreach (var card in Model)
             {

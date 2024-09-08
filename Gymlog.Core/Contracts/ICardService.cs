@@ -12,7 +12,7 @@ namespace Gymlog.Core.Contracts
         Task EditAsync(EditCard model);
 
         Task DeleteCardAsync(int cardId);
-        Task<List<MyCardView>> ViewAllCardsAsync(); 
+        Task<List<MyCardView>> ViewAllCardsAsync(string? searchQuery, string cardStatus); 
 
         Task<MyCardView> CheckCardAsync(int cardNumber, string cardId, string userId, bool check);
     }
