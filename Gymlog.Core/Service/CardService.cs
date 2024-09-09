@@ -158,6 +158,7 @@ namespace Gymlog.Core.Service
                 FirstName = card.FirstName,
                 LastName = card.LastName,
                 End = card.End,
+                Start = card.Start,
                 CardId= card.CardId,
             };
 
@@ -177,6 +178,7 @@ namespace Gymlog.Core.Service
                 card.FirstName = model.FirstName;
                 card.LastName = model.LastName;
                 card.End = model.End;
+                card.Start = model.Start;
                 card.CardId = model.CardId;
 
                 await repository.SaveChangesAsync();

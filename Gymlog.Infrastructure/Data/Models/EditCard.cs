@@ -12,6 +12,7 @@ namespace Gymlog.Infrastructure.Data.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public DateTime End { get; set; }
+        public DateTime Start { get; set; }
         public string CardId { get; set; }
 
         public string FullName

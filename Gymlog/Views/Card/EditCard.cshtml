@@ -29,6 +29,10 @@
                     <input type="text" id="FullName" name="FullName" value="@Model.FirstName @Model.LastName" />
                 </div>
                 <div class="card-expiry">
+                    <label for="Start">Валидна до:</label>
+                    <input type="date" id="Start" name="Start" value="@Model.Start.ToString("yyyy-MM-dd")" />
+                </div>
+                <div class="card-expiry">
                     <label for="End">Валидна до:</label>
                     <input type="date" id="End" name="End" value="@Model.End.ToString("yyyy-MM-dd")" />
                 </div>
