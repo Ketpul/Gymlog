@@ -1,17 +1,14 @@
 ﻿using Gymlog.Core.Contracts;
-using Gymlog.Core.Models.CardViews;
 using Gymlog.Infrastructure.Data.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.ComponentModel.DataAnnotations;
-using System.Diagnostics.CodeAnalysis;
 using System.Security.Claims;
 using static Gymlog.Constants.MessageConstants;
 using static Gymlog.Constants.RoleConstants;
 
 namespace Gymlog.Controllers
 {
-    
+
     public class CardController : BaseController
     {
         private readonly ICardService cardService;
