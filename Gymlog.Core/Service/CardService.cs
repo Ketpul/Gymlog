@@ -100,7 +100,7 @@ namespace Gymlog.Core.Service
             var card = new Card()
             {
                 FirstName = firstName,
-                LastName = firstName,
+                LastName = lastName,
                 Start = startData,
                 End = endData,
                 CardId = cardId,

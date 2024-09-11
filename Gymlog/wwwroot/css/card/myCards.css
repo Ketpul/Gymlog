@@ -96,3 +96,19 @@ button {
 .cardV {
     display: flex;
 }
+
+.valid-dot {
+    display: flex;
+    width: 19px;
+    height: 19px;
+    border-radius: 50%;
+    margin-left: 10px;
+}
+
+.valid-yes {
+    background-color: #24FF00; 
+}
+
+.valid-no {
+    background-color: #ff0000; 
+}

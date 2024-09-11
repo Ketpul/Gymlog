@@ -43,7 +43,7 @@ namespace Gymlog.Controllers
                 return RedirectToAction("CheckCard", new { cardNumber = cardNumber.Value, cardId = cardId, check = true });
             }
 
-            TempData["UserMessageError"] = "Трябва едно от двете полета да е попълнено!";
+            
             return View();
         }
 
@@ -57,7 +57,7 @@ namespace Gymlog.Controllers
                 var model = await cardService.CheckCardAsync(cardNumber, cardId, GetUserId(), check);
                 if (model == null)
                 {
-                    TempData["UserMessageError"] = "Няма карта с този номер";
+                    TempData["UserMessageError"] = "Няма карта с този номер!";
                     return RedirectToAction("ViewCard");
                 }
                 return View(model);

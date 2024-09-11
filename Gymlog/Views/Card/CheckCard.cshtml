@@ -44,8 +44,10 @@
                 </div>
                 <div class="cardV">
                     <label>Валидност:</label>
-                    <div>@Model.Valid</div>
+                    <span class="valid-dot @(@Model.Valid == "Да" ? "valid-yes" : "valid-no")"></span>
                 </div>
+
+
             </div>
         </div>
 
