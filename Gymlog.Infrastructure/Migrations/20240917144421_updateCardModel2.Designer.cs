@@ -4,6 +4,7 @@ using Gymlog.Infrastructure.Data.SeedDb;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Gymlog.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240917144421_updateCardModel2")]
+    partial class updateCardModel2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -101,7 +104,7 @@ namespace Gymlog.Infrastructure.Migrations
                         {
                             Id = "df7c92db-9dec-4483-9b0c-39836de8f44a",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "ba24d403-fd95-4e39-96fa-d4796c61265b",
+                            ConcurrencyStamp = "f6cb9fc4-2ad5-4482-b154-6fdb4266978a",
                             Email = "admin@gmail.com",
                             EmailConfirmed = false,
                             FirstName = "Admin",
@@ -109,10 +112,10 @@ namespace Gymlog.Infrastructure.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@GMAIL.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAIAAYagAAAAEBhTD8Ot8ggUyXrkDIX5z7IZIXXsCAgmOxWNA5i8nOw3rULQn48IZ06CPjlT2/OJXQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEJCUZaKL4/UGX7xfU2kuDLnclrdB+nWm4WB6FANARi8KeWhSYweWS8K9f9MI56VFew==",
                             PhoneNumber = "1234567890",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "12886830-5178-466c-a27c-40c8a4d59afa",
+                            SecurityStamp = "07d6899c-a718-41d1-a8a2-f6e831379f49",
                             TwoFactorEnabled = false,
                             UserName = "admin"
                         });

@@ -18,10 +18,25 @@ namespace Gymlog.Infrastructure.Data.SeedDb
 
             modelBuilder.ApplyConfiguration(new UserConfiguration());
 
+            modelBuilder.Entity<CardReading>()
+                .HasKey(cr => cr.Id); 
+
+            modelBuilder.Entity<CardReading>()
+                .HasOne(cr => cr.Card) 
+                .WithMany(c => c.CardReadings)
+                .HasForeignKey(cr => cr.CardId);
+
+            modelBuilder.Entity<CardReading>()
+                .HasOne(cr => cr.ReadingDate) 
+                .WithMany(rd => rd.CardReadings)
+                .HasForeignKey(cr => cr.ReadingDateId);
+
             base.OnModelCreating(modelBuilder);
         }
 
 
         public DbSet<Card> Cards { get; set;}
+        public DbSet<ReadingDate> ReadingDates { get; set; }
+        public DbSet<CardReading> CardReadings { get; set; }
     }
 }

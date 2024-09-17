@@ -1,0 +1,62 @@
+﻿<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Кредитни Карти</title>
+    <link rel="stylesheet" href="~/css/card/cardTable.css">
+    <script>
+        function saveDate() {
+            var dateInput = document.getElementById('date');
+            localStorage.setItem('selectedDate', dateInput.value);
+        }
+
+        function loadDate() {
+            var savedDate = localStorage.getItem('selectedDate');
+            if (savedDate) {
+                document.getElementById('date').value = savedDate;
+            }
+        }
+
+        window.onload = function () {
+            loadDate();
+        };
+    </script>
+</head>
+<body>
+    <div class="container">
+        <form method="get" action="ViewCardHistory" onsubmit="saveDate()">
+            <div>
+                <label for="date">Избери дата:</label>
+                <input type="date" id="date" name="data" />
+            </div>
+
+            <button type="submit">Търси</button>
+        </form>
+
+        <div class="cards-column">
+            @if (Model != null)
+            {
+                @foreach (var card in Model)
+                {
+                    <a href="@Url.Action("CheckCard", "Card", new { cardNumber = card.Id })" class="card-link">
+                        <div class="credit-card">
+                            <div class="card-logo">
+                                <img src="https://biosportgym.com/wp-content/uploads/2023/05/cropped-cropped-cropped-whitelogo-2-2048x488.png" alt="Card Logo">
+                            </div>
+                            <div class="card-number">Номер на карта: @card.Id</div>
+                            <div class="card-holder">Картодържател: @card.FirstName @card.LastName</div>
+                            <div class="card-expiry">Валидна от: @card.Start.ToString("MMMM dd, yyyy")</div>
+                            <div class="card-expiry">Валидна до: @card.End.ToString("MMMM dd, yyyy")</div>
+                        </div>
+                    </a>
+                }
+            }
+            else
+            {
+                <div class="no-cards">Няма налични карти за показване.</div>
+            }
+        </div>
+    </div>
+</body>
+</html>

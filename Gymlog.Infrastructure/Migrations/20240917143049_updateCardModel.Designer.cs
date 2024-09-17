@@ -4,6 +4,7 @@ using Gymlog.Infrastructure.Data.SeedDb;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Gymlog.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240917143049_updateCardModel")]
+    partial class updateCardModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -101,7 +104,7 @@ namespace Gymlog.Infrastructure.Migrations
                         {
                             Id = "df7c92db-9dec-4483-9b0c-39836de8f44a",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "ba24d403-fd95-4e39-96fa-d4796c61265b",
+                            ConcurrencyStamp = "b47d1e75-d351-4b0d-8f60-a0a38d715939",
                             Email = "admin@gmail.com",
                             EmailConfirmed = false,
                             FirstName = "Admin",
@@ -109,10 +112,10 @@ namespace Gymlog.Infrastructure.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@GMAIL.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAIAAYagAAAAEBhTD8Ot8ggUyXrkDIX5z7IZIXXsCAgmOxWNA5i8nOw3rULQn48IZ06CPjlT2/OJXQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEH6ybhYpeouVaV+gxHQ1qihaYD2x/7deyeVnfJCaE8Mmr42EZ9qeHJVkBpPe3ADhdA==",
                             PhoneNumber = "1234567890",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "12886830-5178-466c-a27c-40c8a4d59afa",
+                            SecurityStamp = "4f7c5c3b-23bc-4b4d-ac63-213200bc4295",
                             TwoFactorEnabled = false,
                             UserName = "admin"
                         });
@@ -147,6 +150,10 @@ namespace Gymlog.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("ReadingDates")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("Start")
                         .HasColumnType("datetime2");
 
@@ -159,45 +166,6 @@ namespace Gymlog.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Cards");
-                });
-
-            modelBuilder.Entity("Gymlog.Infrastructure.Data.Models.CardReading", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("CardId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ReadingDateId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CardId");
-
-                    b.HasIndex("ReadingDateId");
-
-                    b.ToTable("CardReadings");
-                });
-
-            modelBuilder.Entity("Gymlog.Infrastructure.Data.Models.ReadingDate", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ReadingDates");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -337,25 +305,6 @@ namespace Gymlog.Infrastructure.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("Gymlog.Infrastructure.Data.Models.CardReading", b =>
-                {
-                    b.HasOne("Gymlog.Infrastructure.Data.Models.Card", "Card")
-                        .WithMany("CardReadings")
-                        .HasForeignKey("CardId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Gymlog.Infrastructure.Data.Models.ReadingDate", "ReadingDate")
-                        .WithMany("CardReadings")
-                        .HasForeignKey("ReadingDateId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Card");
-
-                    b.Navigation("ReadingDate");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -405,16 +354,6 @@ namespace Gymlog.Infrastructure.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("Gymlog.Infrastructure.Data.Models.Card", b =>
-                {
-                    b.Navigation("CardReadings");
-                });
-
-            modelBuilder.Entity("Gymlog.Infrastructure.Data.Models.ReadingDate", b =>
-                {
-                    b.Navigation("CardReadings");
                 });
 #pragma warning restore 612, 618
         }

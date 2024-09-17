@@ -34,13 +34,13 @@ namespace Gymlog.Controllers
                 return RedirectToAction("CheckCard", new { cardId = cardId, check = true });
 
             }
-            else if(cardNumber.HasValue )
+            else if (cardNumber.HasValue)
             {
-                
+
                 return RedirectToAction("CheckCard", new { cardNumber = cardNumber.Value, cardId = cardId, check = true });
             }
 
-            
+
             return View();
         }
 
@@ -106,7 +106,7 @@ namespace Gymlog.Controllers
 
             TempData[UserMessageSuccess] = "Картата е добавена";
 
-            return RedirectToAction(nameof(CheckCard), new { cardNumber = card});
+            return RedirectToAction(nameof(CheckCard), new { cardNumber = card });
         }
 
         //[HttpGet]
@@ -156,13 +156,23 @@ namespace Gymlog.Controllers
             return RedirectToAction(nameof(ViewCard));
         }
 
+        [HttpGet]
         public async Task<IActionResult> ViewAllCards(string? searchQuery, string cardStatus = "all")
         {
-            // Запазване на търсената стойност и статус на картите във ViewData
             ViewData["SearchQuery"] = searchQuery;
             ViewData["CardStatus"] = cardStatus;
 
             var cards = await cardService.ViewAllCardsAsync(searchQuery, cardStatus);
+            return View(cards);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> ViewCardHistory(DateTime? data)
+        {
+            var selectedDate = data ?? DateTime.Now;
+
+            var cards = await cardService.ViewCardHistoryAsync(selectedDate);
+
             return View(cards);
         }
 

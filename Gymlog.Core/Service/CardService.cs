@@ -37,38 +37,57 @@ namespace Gymlog.Core.Service
                 return null;
             }
 
-            if (card.DailyCounting.Date == DateTime.Today && check)
+            var today = DateTime.Today;
+
+            var alreadyReadToday = await repository.All<CardReading>()
+                .AnyAsync(cr => cr.CardId == card.Id && cr.ReadingDate.Date == today);
+
+            if (check && !alreadyReadToday)
+            {
+                var readingDate = await repository.All<ReadingDate>()
+                .FirstOrDefaultAsync(rd => rd.Date == today);
+
+                if (readingDate == null)
+                {
+                    readingDate = new ReadingDate { Date = today };
+                    await repository.AddAsync(readingDate);
+                    await repository.SaveChangesAsync(); 
+                }
+
+
+
+                var cardReading = new CardReading
+                {
+                    CardId = card.Id,
+                    ReadingDateId = readingDate.Id
+                };
+
+                await repository.AddAsync(cardReading);
+            }
+
+            if (card.DailyCounting.Date == today && check)
             {
                 card.Daily++;
             }
-            else if(card.DailyCounting.Date != DateTime.Today)
+            else if (card.DailyCounting.Date != today)
             {
                 card.Daily = 1;
-                card.DailyCounting = DateTime.Today;
+                card.DailyCounting = today;
             }
 
-            if (card.МonthCounting.Month == DateTime.Today.Month && card.МonthCounting.Year == DateTime.Today.Year && check)
+            if (card.МonthCounting.Month == today.Month && card.МonthCounting.Year == today.Year && check)
             {
                 card.Мonth++;
             }
-            else if(card.МonthCounting.Month != DateTime.Today.Month)
+            else if (card.МonthCounting.Month != today.Month)
             {
                 card.Мonth = 1;
-                card.МonthCounting = DateTime.Today;
+                card.МonthCounting = today;
             }
 
             var currentDate = DateTime.Now;
-            
 
-            if (card.Start <= currentDate && card.End >= currentDate)
-            {
-                valid = "Да";
-            }
-            else
-            {
-                valid = "Не";
-            }
-
+            valid = (card.Start <= currentDate && card.End >= currentDate) ? "Да" : "Не";
 
             await repository.SaveChangesAsync();
 
@@ -85,7 +104,6 @@ namespace Gymlog.Core.Service
                 Valid = valid,
             };
 
-            // Return the model if user is admin or matches the card details
             if (isAdmin || (card.FirstName == user.FirstName && card.LastName == user.LastName))
             {
                 return model;
@@ -238,5 +256,26 @@ namespace Gymlog.Core.Service
             return cards;
         }
 
+        public async Task<List<MyCardView>> ViewCardHistoryAsync(DateTime data)
+        {
+            var cards = await repository.AllReadOnly<CardReading>()
+                .Where(cr => cr.ReadingDate.Date == data.Date)
+                .Select(cr => new MyCardView
+                {
+                    Id = cr.Card.Id,
+                    FirstName = cr.Card.FirstName,
+                    LastName = cr.Card.LastName,
+                    Start = cr.Card.Start,
+                    End = cr.Card.End,
+                    CardId = cr.Card.CardId,
+                    Daily = cr.Card.Daily,
+                    Мonth = cr.Card.Мonth,
+                    Valid = (cr.Card.Start <= DateTime.Now && cr.Card.End >= DateTime.Now) ? "Да" : "Не"
+                })
+                .ToListAsync();
+
+
+            return cards;
+        }
     }
 }

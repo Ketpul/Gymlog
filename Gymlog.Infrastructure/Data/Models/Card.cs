@@ -35,5 +35,7 @@ namespace Gymlog.Infrastructure.Data.Models
 
         [Required]
         public int Мonth { get; set; }
+
+        public List<CardReading> CardReadings { get; set; } = new List<CardReading>();
     }
 }
